@@ -1,0 +1,153 @@
+<header class="navbar">
+
+    <h2>MaxTech Admin</h2>
+
+    <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="users.html">Users</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="index.html">Website</a>
+    </nav>
+
+</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>MaxTech Admin Dashboard</h1>
+  <div class="stats">
+
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <p id="totalUsers">1</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Balance</h3>
+        <p id="totalBalance">₦0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Transactions</h3>
+        <p id="totalTransactions">0</p>
+    </div>
+
+  </div>
+
+<div class="service-container">
+
+    <div class="service-card">
+        <h2>👥 Users</h2>
+        <button onclick="location.href='users.html'">View Users</button>
+    </div>
+
+    <div class="service-card">
+        <h2>💳 Transactions</h2>
+        <button onclick="location.href='transactions.html'">View Transactions</button>
+    </div>
+
+    <div class="service-card">
+        <h2>⚙️ Settings</h2>
+        <button onclick="alert('Coming Soon!')">Settings</button>
+    </div>
+
+    <div class="service-card">
+        <h2>🚪 Logout</h2>
+        <button onclick="location.href='admin-login.html'">Logout</button>
+      let balance = Number(localStorage.getItem("balance")) || 0;
+document.getElementById("totalBalance").textContent = "₦" + balance;
+
+let history = JSON.parse(localStorage.getItem("history")) || [];
+document.getElementById("totalTransactions").textContent = history.length;
+
+document.getElementById("totalUsers").textContent =
+localStorage.getItem("fullname") ? 1 : 0;
+    </div>
+  <div class="admin-container">
+
+    <div class="sidebar">
+
+        <h2>📊 Admin Dashboard</h2>
+
+        <a href="admin-dashboard.html">🏠 Dashboard</a>
+
+        <a href="users.html">👥 Users</a>
+
+        <a href="pending-payments.html">💰 Pending Deposits</a>
+
+        <a href="pending-withdrawals.html">💸 Withdrawal Requests</a>
+
+        <a href="transactions.html">📜 Transactions</a>
+
+        <a href="settings.html">⚙️ Settings</a>
+
+        <a href="admin-login.html">🚪 Logout</a>
+
+    </div>
+
+    <div class="main-content">
+      <h2>Dashboard Overview</h2>
+
+<div class="stats">
+
+    <div class="card">
+        <h3>Total Users</h3>
+        <p id="totalUsers">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Pending Deposits</h3>
+        <p id="pendingDeposits">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Pending Withdrawals</h3>
+        <p id="pendingWithdrawals">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Transactions</h3>
+        <p id="totalTransactions">0</p>
+    </div>
+
+</div>
+
+        <!-- Your current dashboard content goes here -->
+
+    </div>
+
+  </div>
+
+</div>
+<script>
+
+</script>
+  <script>
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+let payments = JSON.parse(localStorage.getItem("payments")) || [];
+let withdrawals = JSON.parse(localStorage.getItem("withdrawals")) || [];
+let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+document.getElementById("totalUsers").textContent = users.length;
+
+document.getElementById("pendingDeposits").textContent =
+payments.filter(p => p.status === "Pending").length;
+
+document.getElementById("pendingWithdrawals").textContent =
+withdrawals.filter(w => w.status === "Pending").length;
+
+document.getElementById("totalTransactions").textContent =
+transactions.length;
+
+  </script>
+
+</body>
+</html>

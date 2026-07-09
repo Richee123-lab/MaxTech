@@ -1,0 +1,125 @@
+DOCTYPE html>
+<html>
+<head>
+    <title>Deposit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="service-card">
+
+<h2>Deposit Funds</h2>
+
+<p>Transfer money to the account below.</p>
+
+<div class="account-card">
+  <div class="service-card">
+
+<h3>Deposit Instructions</h3>
+
+<p>
+1. Transfer 6000 for account activation  to the account below.<br><br>
+
+2. Your deposit will be verified by MaxTech.<br><br>
+
+3. Once confirmed, your wallet balance will be updated.
+</p>
+
+  </div>
+
+<h3>Bank</h3>
+<p>palmpay</p>
+
+<h3>Account Name</h3>
+<p>Daniel Odinakachi</p>
+
+<h3>Account Number</h3>
+<p>09041195273</p>
+
+<button onclick="copyNumber()">
+Copy Account Number
+</button>
+  <hr>
+
+<h3>I've Made Payment</h3>
+
+<input type="number" id="amount" placeholder="Amount Paid">
+
+<input type="text" id="senderBank" placeholder="Sender's Bank">
+
+<input type="text" id="reference" placeholder="Transaction Reference">
+
+<button onclick="submitPayment()">
+Submit Payment
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+
+
+function copyNumber() {
+
+    let details = `Bank: Opay
+Account Name: Kelechi Chibuike
+Account Number: 8123456789`;
+
+    navigator.clipboard.writeText(details);
+
+    alert("Bank details copied successfully!");
+
+}
+function submitPayment(){
+
+    let amount = document.getElementById("amount").value;
+    let senderBank = document.getElementById("senderBank").value;
+    let reference = document.getElementById("reference").value;
+
+    if(amount === "" || senderBank === ""){
+
+        alert("Please complete all required fields.");
+
+        return;
+
+    }
+
+    let payments =
+        JSON.parse(localStorage.getItem("payments")) || [];
+
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+payments.push({
+
+    fullname: currentUser.fullname,
+
+    email: currentUser.email,
+
+    referralCode: currentUser.referralCode,
+
+    amount: amount,
+
+    senderBank: senderBank,
+
+    reference: reference,
+
+    status: "Pending"
+
+});
+
+
+    localStorage.setItem(
+        "payments",
+        JSON.stringify(payments)
+    );
+
+    alert("Payment notification submitted successfully.");
+
+}
+
+</script>
+
+</body>
+</html>

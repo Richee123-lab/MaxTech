@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Pending Payments</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h2>Pending Deposits</h2>
+
+<div id="payments"></div>
+
+<script>
+
+let payments =
+JSON.parse(localStorage.getItem("payments")) || [];
+
+let container =
+document.getElementById("payments");
+
+payments.forEach(function(payment,index){
+
+container.innerHTML += `
+
+<div class="service-card">
+
+<h3>${payment.fullname}</h3>
+
+<p>Amount: ₦${payment.amount}</p>
+
+<p>Bank: ${payment.senderBank}</p>
+
+<p>Reference: ${payment.reference}</p>
+
+<p>Status: ${payment.status}</p>
+
+<button onclick="approve(${index})">
+
+Approve
+
+</button>
+
+</div>
+
+`;
+
+});
+
+function approve(index){
+
+    let payments = JSON.parse(localStorage.getItem("payments")) || [];
+
+    let payment = payments[index];
+
+    // Change payment status
+    payment.status = "Approved";
+
+    // Update balance
+    let balance = Number(localStorage.getItem("balance")) || 0;
+    balance += Number(payment.amount);
+
+    localStorage.setItem("balance", balance);
+
+    // Save transaction
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+    transactions.push({
+        type: "Deposit",
+        amount: payment.amount,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+
+    // Save updated payments
+    localStorage.setItem("payments", JSON.stringify(payments));
+
+    alert("Deposit approved successfully!");
+
+    location.reload();
+
+}
+
+</script>
+
+</body>
+</html>

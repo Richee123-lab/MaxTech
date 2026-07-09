@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>MaxTech Tasks</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<div class="header">
+
+<h2>🎯 Task Center</h2>
+
+<p>Complete tasks and earn ₦1,000 each.</p>
+
+</div>
+
+<div class="task-card">
+  <div class="wallet-card">
+
+<h2>🎁 Task Rewards</h2>
+
+<p>Reward Per Task</p>
+
+<h1>₦1,000</h1>
+
+<p>Total Completed: <span id="completedCount">0</span></p>
+
+  </div>
+    <h3>🎯 Daily Login</h3>
+    <p>Login to your MaxTech account.</p>
+    <p><strong>Reward:</strong> ₦1,000</p>
+    <button onclick="location.href='article1.html'">
+📖 Read Article
+    </button>
+</div>
+
+<div class="task-card">
+    <h3>💳 Visit Deposit Page</h3>
+    <p>Open the deposit page.</p>
+    <p><strong>Reward:</strong> ₦1,000</p>
+    <button onclick="completeTask(2)">Complete Task</button>
+</div>
+
+<div class="task-card">
+    <h3>💸 Visit Withdrawal Page</h3>
+    <p>Open the withdrawal page.</p>
+    <p><strong>Reward:</strong> ₦1,000</p>
+    <button onclick="completeTask(3)">Complete Task</button>
+</div>
+
+<div class="task-card">
+    <h3>👥 Open Referral Page</h3>
+    <p>Visit your referral page.</p>
+    <p><strong>Reward:</strong> ₦1,000</p>
+    <button onclick="completeTask(4)">Complete Task</button>
+</div>
+
+<div class="task-card">
+    <h3>👤 View Your Profile</h3>
+    <p>Open your profile page.</p>
+    <p><strong>Reward:</strong> ₦1,000</p>
+    <button onclick="completeTask(5)">Complete Task</button>
+</div>
+
+</>
+
+<br>
+
+<button onclick="location.href='dashboard.html'">
+⬅ Back to Dashboard
+</button>
+
+</div>
+
+<script>
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser.depositVerified) {
+    alert("Please make your first deposit to unlock this feature.");
+    window.location.href = "deposit.html";
+}
+
+function completeTask(taskId){
+
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if(!currentUser){
+        alert("Please login first.");
+        return;
+    }
+
+    if(!currentUser.completedTasks){
+        currentUser.completedTasks = [];
+    }
+
+    if(currentUser.completedTasks.includes(taskId)){
+        alert("✅ You have already completed this task.");
+        return;
+    }
+
+    currentUser.completedTasks.push(taskId);
+    currentUser.balance = Number(currentUser.balance || 0) + 1000;
+
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    for(let i = 0; i < users.length; i++){
+        if(users[i].email === currentUser.email){
+            users[i] = currentUser;
+            break;
+        }
+    }
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("🎉 Task completed!\n₦1,000 has been added to your wallet.");
+
+    location.reload();
+}
+
+window.onload = function(){
+
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if(!currentUser) return;
+
+    let completed = currentUser.completedTasks || [];
+
+    document.getElementById("completedCount").textContent = completed.length;
+
+    completed.forEach(function(taskId){
+
+        let button = document.querySelector(
+            "button[onclick='completeTask(" + taskId + ")']"
+        );
+
+        if(button){
+            button.innerHTML = "✅ Completed";
+            button.disabled = true;
+            button.style.background = "green";
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>

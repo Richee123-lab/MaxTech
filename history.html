@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container">
+
+<h2>Transaction History</h2>
+
+<ul id="historyList"></ul>
+
+<button onclick="window.location.href='dashboard.html'">
+Back to Dashboard
+</button>
+
+</div>
+
+<script>
+
+let history = JSON.parse(localStorage.getItem("history")) || [];
+
+let list = document.getElementById("historyList");
+
+history.forEach(function(item){
+
+    let li = document.createElement("li");
+
+    li.textContent = item;
+
+    list.appendChild(li);
+
+});
+  <h2>Transaction History</h2>
+
+<table id="historyTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+</script>
+
+</body>
+</html>

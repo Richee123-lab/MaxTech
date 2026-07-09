@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - MaxTech</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container">
+
+    <h1>MaxTech Admin</h1>
+
+    <input type="text" id="adminUsername" placeholder="Admin Username">
+
+    <input type="password" id="adminPassword" placeholder="Admin Password">
+
+    <button onclick="adminLogin()">Login</button>
+
+</div>
+
+<script>
+
+function adminLogin(){
+
+    let username = document.getElementById("adminUsername").value.trim();
+    let password = document.getElementById("adminPassword").value;
+
+    if(username === "admin" && password === "maxtech123"){
+
+        alert("Welcome Admin!");
+
+        alert("Redirecting to dashboard...");
+
+        window.location.href = "admin-dashboard.html";
+
+    }else{
+
+        alert("Invalid Admin Login");
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

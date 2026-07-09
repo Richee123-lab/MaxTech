@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container">
+
+    <h2>Account Settings</h2>
+
+    <input type="text" id="fullname" placeholder="Full Name">
+
+    <input type="email" id="email" placeholder="Email Address">
+
+    <button onclick="saveSettings()">Save Changes</button>
+
+    <br><br>
+
+    <button onclick="location.href='dashboard.html'">
+        Back to Dashboard
+    </button>
+
+</div>
+
+<script>
+
+document.getElementById("fullname").value =
+localStorage.getItem("fullname") || "";
+
+document.getElementById("email").value =
+localStorage.getItem("email") || "";
+
+function saveSettings(){
+
+    let fullname = document.getElementById("fullname").value;
+    let email = document.getElementById("email").value;
+
+    localStorage.setItem("fullname", fullname);
+    localStorage.setItem("email", email);
+
+    alert("Settings updated successfully!");
+
+}
+
+</script>
+
+</body>
+</html>

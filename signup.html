@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <h1>MaxTech Solutions</h1>
+
+    <h2>Create Account</h2>
+
+    <input type="text" id="fullname" placeholder="Full Name">
+
+    <input type="email" id="email" placeholder="Email Address">
+<label>Referral Code (Optional)</label>
+
+<input type="text"
+id="referral"
+placeholder="Enter referral code">
+    <input type="password" id="password" placeholder="Create Password">
+
+    <button onclick="signup()">Create Account</button>
+
+    <p>
+        Already have an account?
+        <a href="login.html">Login</a>
+    </p>
+
+</div>
+
+<script>
+function signup() {
+
+    let fullname = document.getElementById("fullname").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if (fullname === "" || email === "" || password === "") {
+        alert("Please complete all fields.");
+        return;
+    }
+
+    let accountNumber = Math.floor(
+        1000000000 + Math.random() * 9000000000
+    );
+
+    let referralCode = "MAX" + Math.floor(
+        100000 + Math.random() * 900000
+    );
+
+    let referredBy = document.getElementById("referral").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let newUser = {
+        fullname,
+        email,
+        password,
+        accountNumber,
+        referralCode,
+        referredBy,
+        balance: 0,
+        totalReferrals: 0,
+        referralBonus: 0
+      depositVerified: false,
+    };
+  if (referredBy !== "") {
+
+    let referrer = users.find(function(user) {
+        return user.referralCode === referredBy;
+    });
+
+    if (referrer) {
+
+        referrer.totalReferrals =
+            (referrer.totalReferrals || 0) + 1;
+
+        referrer.referralBonus =
+            (referrer.referralBonus || 0) + 1000;
+
+        referrer.balance =
+            (Number(referrer.balance) || 0) + 1000;
+
+    }
+
+  }
+
+    users.push(newUser);
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Account created successfully!");
+
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>All Transactions</h1>
+
+<div class="service-card">
+
+    <ul id="transactionList"></ul>
+
+</div>
+
+<br>
+
+<button onclick="location.href='admin-dashboard.html'">
+Back to Dashboard
+</button>
+
+<script>
+
+let history = JSON.parse(localStorage.getItem("history")) || [];
+
+let list = document.getElementById("transactionList");
+
+if(history.length === 0){
+
+    list.innerHTML = "<li>No transactions available.</li>";
+
+}else{
+
+    history.forEach(function(item){
+
+        let li = document.createElement("li");
+
+        li.textContent = item;
+
+        list.appendChild(li);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

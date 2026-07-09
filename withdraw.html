@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Withdraw</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container">
+
+<h2>Withdraw Money</h2>
+
+<input type="number" id="amount" placeholder="Enter Amount">
+
+<button onclick="withdrawMoney()">Withdraw</button>
+
+</div>
+
+<script>
+function withdrawMoney(){
+
+    let amount = Number(document.getElementById("amount").value);
+    let balance = Number(localStorage.getItem("balance")) || 0;
+
+    if(amount > balance){
+        alert("Insufficient balance!");
+        return;
+    }
+
+    balance = balance - amount;
+
+    localStorage.setItem("balance", balance);
+  let history = JSON.parse(localStorage.getItem("history")) || [];
+
+history.push("Withdrew ₦" + amount);
+
+localStorage.setItem("history", JSON.stringify(history));
+
+    alert("Withdrawal Successful!");
+
+    window.location.href = "dashboard.html";
+
+}
+</script>
+
+</body>
+</html>

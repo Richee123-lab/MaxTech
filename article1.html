@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Article 1</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<div class="header">
+
+<h2>📰 Article 1</h2>
+
+<p>Read this article to earn <b>₦1,000</b>.</p>
+
+</div>
+
+<div class="task-card">
+
+<h3>5 Smart Ways to Save Money Every Month</h3>
+
+<p>
+
+Saving money is one of the most important financial habits anyone can develop. Start by creating a monthly budget so you know exactly where your money goes. Separate your needs from your wants and avoid unnecessary spending. Make it a habit to save a small amount every time you receive income, even if it's only a little. Over time, these savings grow and can help you handle emergencies or invest in opportunities. Financial discipline is not about earning more—it's about managing what you already have wisely.
+
+</p>
+
+<button id="claimBtn" disabled>
+
+⏳ Read for 30 seconds...
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let seconds = 30;
+
+let button = document.getElementById("claimBtn");
+
+let timer = setInterval(function(){
+
+    seconds--;
+
+    button.innerHTML =
+    "⏳ Read for " + seconds + " seconds";
+
+    if(seconds <= 0){
+
+        clearInterval(timer);
+
+        button.disabled = false;
+
+        button.innerHTML =
+        "🎉 Claim ₦1,000";
+
+        button.onclick = rewardUser;
+
+    }
+
+},1000);
+
+function rewardUser(){
+
+    let currentUser =
+    JSON.parse(localStorage.getItem("currentUser"));
+
+    if(!currentUser){
+
+        alert("Please login first.");
+
+        return;
+
+    }
+
+    if(!currentUser.completedTasks){
+
+        currentUser.completedTasks=[];
+
+    }
+
+    if(currentUser.completedTasks.includes("article1")){
+
+        alert("You have already claimed this reward.");
+
+        return;
+      location.href = "dashboard.html";
+
+    }
+
+    currentUser.completedTasks.push("article1");
+
+    currentUser.balance =
+    Number(currentUser.balance||0)+1000;
+localStorage.setItem("balance", currentUser.balance);
+    localStorage.setItem(
+        "currentUser",
+        JSON.stringify(currentUser)
+    );
+
+    let users =
+    JSON.parse(localStorage.getItem("users"))||[];
+
+    for(let i=0;i<users.length;i++){
+
+        if(users[i].email===currentUser.email){
+
+            users[i]=currentUser;
+
+        }
+
+    }
+
+    localStorage.setItem(
+        "users",
+        JSON.stringify(users)
+    );
+
+    alert("🎉 Congratulations!\n₦1,000 has been added.");
+
+    location.href="tasks.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

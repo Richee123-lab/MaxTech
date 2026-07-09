@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaxTech Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <h1>MaxTech Solutions</h1>
+
+    <h2>Login</h2>
+
+    <input type="email" id="email" placeholder="Email Address">
+
+<input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">
+    Login
+    </button>
+
+    <p>Don't have an account?
+        <a href="signup.html">Create Account</a>
+    </p>
+
+</div>
+<script>
+function login() {
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let foundUser = users.find(function(user) {
+        return user.email === email && user.password === password;
+    });
+
+    if (foundUser) {
+
+        localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("currentUser", JSON.stringify(foundUser));
+      alert("Referral Code: " + foundUser.referralCode);
+        localStorage.setItem("fullname", foundUser.fullname);
+        localStorage.setItem("email", foundUser.email);
+        localStorage.setItem("accountNumber", foundUser.accountNumber);
+        localStorage.setItem("referralCode", foundUser.referralCode);
+        localStorage.setItem("balance", foundUser.balance);
+
+        alert("Login successful!");
+
+        window.location.href = "dashboard.html";
+
+    } else {
+
+        alert("Incorrect email or password.");
+
+    }
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Pending Withdrawals</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h2>Pending Withdrawal Requests</h2>
+
+<div id="withdrawals"></div>
+
+<script>
+
+let withdrawals =
+JSON.parse(localStorage.getItem("withdrawals")) || [];
+
+let container =
+document.getElementById("withdrawals");
+
+if(withdrawals.length===0){
+
+container.innerHTML="<h3>No withdrawal requests.</h3>";
+
+}
+
+withdrawals.forEach(function(item,index){
+
+container.innerHTML += `
+
+<div class="service-card">
+
+<h3>${item.fullname}</h3>
+
+<p>Amount: ₦${item.amount}</p>
+
+<p>Bank: ${item.bank}</p>
+
+<p>Account Name: ${item.accountName}</p>
+
+<p>Account Number: ${item.accountNumber}</p>
+
+<p>Status: ${item.status}</p>
+
+<button onclick="approveWithdrawal(${index})">
+Approve
+</button>
+
+<button onclick="rejectWithdrawal(${index})">
+Reject
+</button>
+
+</div>
+
+`;
+
+});
+
+function approveWithdrawal(index){
+
+let withdrawals =
+JSON.parse(localStorage.getItem("withdrawals"));
+
+let balance =
+Number(localStorage.getItem("balance")) || 0;
+
+let amount =
+Number(withdrawals[index].amount);
+
+if(balance < amount){
+
+alert("Insufficient balance.");
+
+return;
+
+}
+
+balance -= amount;
+
+localStorage.setItem("balance",balance);
+  let transactions =
+JSON.parse(localStorage.getItem("transactions")) || [];
+
+transactions.push({
+    type: "Withdrawal",
+    amount: amount,
+    status: "Approved",
+    date: new Date().toLocaleString()
+});
+
+localStorage.setItem(
+    "transactions",
+    JSON.stringify(transactions)
+);
+
+withdrawals[index].status="Approved";
+
+localStorage.setItem(
+"withdrawals",
+JSON.stringify(withdrawals)
+);
+
+alert("Withdrawal approved successfully and the user's balance has been updated.");
+
+location.reload();
+
+}
+
+function rejectWithdrawal(index){
+
+let withdrawals =
+JSON.parse(localStorage.getItem("withdrawals"));
+
+withdrawals[index].status="Rejected";
+
+localStorage.setItem(
+"withdrawals",
+JSON.stringify(withdrawals)
+);
+
+alert("Withdrawal Rejected");
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+
+</html>

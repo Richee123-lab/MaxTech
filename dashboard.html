@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MaxTech Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<div class="header">
+
+<h2>💙 MaxTech</h2>
+
+<p>Welcome back, <span id="username"></span></p>
+
+</div>
+
+<div class="wallet-card">
+
+    <h2>💙 MaxTech Wallet</h2>
+
+    <p>Available Balance</p>
+
+    <h1 id="balanceText">
+        ₦<span id="balance">0</span>
+    </h1>
+
+    <button id="toggleBtn" onclick="toggleBalance()">
+        👁 Hide Balance
+    </button>
+
+    <hr>
+
+  
+
+    <p>
+        <strong>Referral Code:</strong>
+        <span id="referralCode"></span>
+    </p>
+
+</div>
+
+<div class="actions">
+
+<div class="action-card" onclick="location.href='deposit.html'">
+    <h2>💳</h2>
+    <p>Deposit</p>
+</div>
+
+<div class="action-card" onclick="location.href='withdraw.html'">
+    <h2>💸</h2>
+    <p>Withdraw</p>
+</div>
+
+<div class="action-card" onclick="location.href='history.html'">
+    <h2>📜</h2>
+    <p>History</p>
+</div>
+
+<div class="action-card" onclick="location.href='profile.html'">
+    <h2>👤</h2>
+    <p>Profile</p>
+</div>
+  <div class="stats">
+
+    <div class="stat-card">
+        <h4>Total Balance</h4>
+        <h2 id="statBalance">₦0</h2>
+    </div>
+
+    <div class="stat-card">
+        <h4>Total Referrals</h4>
+        <h2 id="totalReferrals">0</h2>
+    </div>
+
+    <div class="stat-card">
+        <h4>Referral Bonus</h4>
+        <h2 id="referralBonus">₦0</h2>
+    </div>
+    <div class="announcement">
+
+<h3>📢 Latest Announcement</h3>
+      <div class="action-card" onclick="location.href='tasks.html'">
+    <h2>🎯</h2>
+    <p>Tasks</p>
+      </div>
+
+<p>
+
+Welcome to <b>MaxTech</b>.
+
+Invite your friends and earn referral bonuses.
+
+Deposit funds to begin investing and watch your portfolio grow.
+
+</p>
+
+    </div>
+
+</div>
+
+</div>
+
+<div 
+
+</>
+
+  <script>
+let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if(currentUser){
+
+document.getElementById("referralCode").innerHTML =
+"<b>" + currentUser.referralCode + "</b>";
+
+
+    document.getElementById("balance").textContent =
+    "₦" + Number(currentUser.balance).toLocaleString();
+
+}
+
+    
+    function toggleBalance(){
+
+    let balanceText = document.getElementById("balanceText");
+    let button = document.getElementById("toggleBtn");
+
+    if(balanceText.innerHTML.includes("*****")){
+
+        balanceText.innerHTML = "₦<span id='balance'>" + localStorage.getItem("balance") + "</span>";
+        button.innerHTML = "Hide Balance";
+
+    }else{
+
+        balanceText.innerHTML = "₦*****";
+        button.innerHTML = "Show Balance";
+
+    }
+
+    }
+  if(localStorage.getItem("loggedIn") !== "true"){
+    alert("Please login first.");
+    window.location.href = "login.html";
+  }  
+</script>
+
+</body>
+</html>

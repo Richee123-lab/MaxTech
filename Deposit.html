@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deposit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container">
+
+<h2>Deposit Money</h2>
+
+<input type="number" id="amount" placeholder="Enter Amount">
+
+<button onclick="deposit()">Deposit</button>
+
+</div>
+
+<script>
+function deposit(){
+
+    let amount = Number(document.getElementById("amount").value);
+
+    let balance = Number(localStorage.getItem("balance")) || 0;
+
+    balance = balance + amount;
+
+    localStorage.setItem("balance", balance);
+  let history = JSON.parse(localStorage.getItem("history")) || [];
+
+history.push("Deposited ₦" + amount);
+
+localStorage.setItem("history", JSON.stringify(history));
+
+    alert("Deposit Successful!");
+
+    window.location.href = "dashboard.html";
+
+}
+</script>
+
+</body>
+</html>
