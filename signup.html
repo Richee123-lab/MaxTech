@@ -59,17 +59,17 @@ function signup() {
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     let newUser = {
-        fullname,
-        email,
-        password,
-        accountNumber,
-        referralCode,
-        referredBy,
-        balance: 0,
-        totalReferrals: 0,
-        referralBonus: 0
-      depositVerified: false,
-    };
+    fullname,
+    email,
+    password,
+    accountNumber,
+    referralCode,
+    referredBy,
+    balance: 0,
+    totalReferrals: 0,
+    referralBonus: 0,
+    depositVerified: false
+};
   if (referredBy !== "") {
 
     let referrer = users.find(function(user) {
