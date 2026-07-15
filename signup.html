@@ -35,71 +35,45 @@ placeholder="Enter referral code">
 </div>
 
 <script>
-function signup() {
+async function signup() {
 
-    let fullname = document.getElementById("fullname").value;
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+    const fullname = document.getElementById("fullname").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const referredBy = document.getElementById("referral").value;
 
-    if (fullname === "" || email === "" || password === "") {
+    if (!fullname || !email || !password) {
         alert("Please complete all fields.");
         return;
     }
 
-    let accountNumber = Math.floor(
-        1000000000 + Math.random() * 9000000000
-    );
+    try {
 
-    let referralCode = "MAX" + Math.floor(
-        100000 + Math.random() * 900000
-    );
+        const response = await fetch("https://maxtech-production.up.railway.app/api/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                fullname,
+                email,
+                password,
+                referredBy
+            })
+        });
 
-    let referredBy = document.getElementById("referral").value;
+        const data = await response.json();
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+        alert(data.message);
 
-    let newUser = {
-    fullname,
-    email,
-    password,
-    accountNumber,
-    referralCode,
-    referredBy,
-    balance: 0,
-    totalReferrals: 0,
-    referralBonus: 0,
-    depositVerified: false
-};
-  if (referredBy !== "") {
+        if (data.success) {
+            window.location.href = "login.html";
+        }
 
-    let referrer = users.find(function(user) {
-        return user.referralCode === referredBy;
-    });
-
-    if (referrer) {
-
-        referrer.totalReferrals =
-            (referrer.totalReferrals || 0) + 1;
-
-        referrer.referralBonus =
-            (referrer.referralBonus || 0) + 1000;
-
-        referrer.balance =
-            (Number(referrer.balance) || 0) + 1000;
-
+    } catch (error) {
+        alert("Unable to connect to the server.");
     }
-
-  }
-
-    users.push(newUser);
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Account created successfully!");
-
-    window.location.href = "login.html";
 }
 </script>
-
 </body>
 </html>
